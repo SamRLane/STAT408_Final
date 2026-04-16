@@ -1,8 +1,11 @@
 ---
 title: "Final"
-format: html
-editor: source
 author: "Samuel Lane & Nolan Scott"
+format: 
+  dashboard:
+    theme: yeti
+embed-resources: true
+
 ---
 
 ```{r}
