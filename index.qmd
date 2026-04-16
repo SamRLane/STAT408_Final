@@ -3,7 +3,7 @@ title: "Final"
 author: "Samuel Lane & Nolan Scott"
 format: 
   dashboard:
-    theme: yeti
+    theme: sandstone
 embed-resources: true
 
 ---
