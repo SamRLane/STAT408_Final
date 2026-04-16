@@ -45,6 +45,12 @@ climbs = climbs |> mutate(
 )
 ```
 
+# Introduction
+
+Stuff goes here
+
+# Results 1
+
 ```{r}
 #| warning: false
 #Had to look up code for IQR to remove outliers
@@ -55,6 +61,8 @@ climbs = climbs |> filter(
 ggplot(data = climbs, aes(x = arm_span, y = max_grade_boulder), na.rm = TRUE) + 
   geom_point()
 ```
+
+# Results 2
 
 ```{r}
 #| warning: false
@@ -67,7 +75,7 @@ ggplot(data = climbs, aes(x = arm_span - height, y = max_grade_boulder)) +
   geom_point()
 ```
 
-```{r}
+# Summary
 
-```
+Stuff goes here
 
