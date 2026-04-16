@@ -5,5 +5,66 @@ editor: source
 author: "Samuel Lane & Nolan Scott"
 ---
 
-hello
-## Hello
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+
+climbs = read_csv("Climbs.csv", col_select = c(1, 2, 3, 4, 5, 6, 8, 11, 14, 15, 
+                                               16, 17, 26, 28, 32, 34), 
+na = c("NA", "", "N/A", "Don't know", "?", "??", "???", "Na", "unknown", 
+       "Not sure", "no idea", "Unsure", "Not sure", "Nil", "Dont know",
+       "don't know", "Dunno", "????", "No clue", "i suck!", "N/a", 
+       "oooh...not sure", "ha! no need to train that yet", 
+       "Never tried this", "Not calculated before", "n/a", "-", 
+       " I don't know", "idk", "I don't climb routes", "I don't boulder"))
+
+
+colnames(climbs) = c("time", "sex", "height", "weight", "arm_span", 
+"time_climbed", "max_grade_boulder", "max_grade_sport", "frequency_climbing", 
+"avg_hours_climbing_week", "avg_hours_training_week", "frequency_hangboarding", 
+"frequency_endurance", "frequency_strength", "max_pullup", "max_pushup")
+
+climbs = climbs |> mutate(
+  height = as.numeric(parse_number(height)),
+  weight = as.numeric(parse_number(weight)),
+  arm_span  = as.numeric(parse_number(arm_span)),
+  max_grade_boulder  = as.integer(parse_number(max_grade_boulder)),
+  max_grade_sport  = as.integer(max_grade_sport),
+  frequency_climbing  = as.integer(frequency_climbing),
+  avg_hours_climbing_week  = as.integer(avg_hours_climbing_week),
+  avg_hours_training_week  = as.integer(avg_hours_training_week),
+  frequency_hangboarding  = as.integer(frequency_hangboarding),
+  frequency_endurance  = as.integer(frequency_endurance),
+  frequency_strength  = as.integer(frequency_strength),
+  max_pullup  = as.integer(parse_number(max_pullup)),
+  max_pushup  = as.integer(parse_number(max_pushup))
+)
+```
+
+```{r}
+#| warning: false
+#Had to look up code for IQR to remove outliers
+climbs = climbs |> filter(
+  arm_span >= quantile(arm_span, 0.25, na.rm = TRUE) - 1.5 * IQR(arm_span, na.rm = TRUE), 
+  arm_span <= quantile(arm_span, 0.75, na.rm = TRUE) + 1.5 * IQR(arm_span, na.rm = TRUE)
+)
+ggplot(data = climbs, aes(x = arm_span, y = max_grade_boulder), na.rm = TRUE) + 
+  geom_point()
+```
+
+```{r}
+#| warning: false
+climbs = climbs |> filter(
+  height >= quantile(arm_span, 0.25, na.rm = TRUE) - 1.5 * IQR(height, na.rm = TRUE), 
+  height <= quantile(arm_span, 0.75, na.rm = TRUE) + 1.5 * IQR(height, na.rm = TRUE)
+)
+
+ggplot(data = climbs, aes(x = arm_span - height, y = max_grade_boulder)) + 
+  geom_point()
+```
+
+```{r}
+
+```
+
