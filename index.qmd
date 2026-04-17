@@ -2,7 +2,7 @@
 title: "Final"
 author: "Samuel Lane & Nolan Scott"
 format: 
-  dashboard:
+  dashboard: 
     theme: sandstone
 embed-resources: true
 
@@ -46,8 +46,12 @@ climbs = climbs |> mutate(
 ```
 
 # Introduction
+To see our dashboard which is how it is meant to be viewed go to this link 
+
+https://samrlane.github.io/STAT408_Final
 
 A link to our Github repository
+
 https://github.com/SamRLane/STAT408_Final
 
 # Results 1
