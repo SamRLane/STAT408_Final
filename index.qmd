@@ -47,8 +47,8 @@ climbs = climbs |> mutate(
 
 # Introduction
 
-Stuff goes here
-La do dee da
+A link to our Github repository
+https://github.com/SamRLane/STAT408_Final
 
 # Results 1
 
