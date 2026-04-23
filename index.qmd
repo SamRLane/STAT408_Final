@@ -59,25 +59,44 @@ https://github.com/SamRLane/STAT408_Final
 ```{r}
 #| warning: false
 #Had to look up code for IQR to remove outliers
-climbs = climbs |> filter(
+climbsAH = climbs |> filter(
   arm_span >= quantile(arm_span, 0.25, na.rm = TRUE) - 1.5 * IQR(arm_span, na.rm = TRUE), 
-  arm_span <= quantile(arm_span, 0.75, na.rm = TRUE) + 1.5 * IQR(arm_span, na.rm = TRUE)
+  arm_span <= quantile(arm_span, 0.75, na.rm = TRUE) + 1.5 * IQR(arm_span, na.rm = TRUE),
+  height >= quantile(height, 0.25, na.rm = TRUE) - 1.5 * IQR(height, na.rm = TRUE), 
+  height >= quantile(height, 0.75, na.rm = TRUE) - 1.5 * IQR(height, na.rm = TRUE)
 )
-ggplot(data = climbs, aes(x = arm_span, y = max_grade_boulder), na.rm = TRUE) + 
-  geom_point()
+#arm span vs max grade bouldering
+ggplot(data = climbsAH, aes(x = arm_span, y = max_grade_boulder), na.rm = TRUE) + 
+  geom_smooth()
+#ape index vs max grade bouldering
+ggplot(data = climbsAH, aes(x = arm_span - height, y = max_grade_boulder)) + 
+  geom_smooth()
 ```
 
 # Results 2
 
 ```{r}
 #| warning: false
-climbs = climbs |> filter(
-  height >= quantile(arm_span, 0.25, na.rm = TRUE) - 1.5 * IQR(height, na.rm = TRUE), 
-  height <= quantile(arm_span, 0.75, na.rm = TRUE) + 1.5 * IQR(height, na.rm = TRUE)
+
+climbsP = climbs |> filter(
+  max_pullup >= quantile(max_pullup, 0.25, na.rm = TRUE) - 1.5 * IQR(max_pullup, na.rm = TRUE), 
+  max_pullup <= quantile(max_pullup, 0.75, na.rm = TRUE) + 1.5 * IQR(max_pullup, na.rm = TRUE),
+  max_pushup >= quantile(max_pushup, 0.25, na.rm = TRUE) - 1.5 * IQR(max_pushup, na.rm = TRUE), 
+  max_pushup <= quantile(max_pushup, 0.75, na.rm = TRUE) + 1.5 * IQR(max_pushup, na.rm = TRUE)
 )
 
-ggplot(data = climbs, aes(x = arm_span - height, y = max_grade_boulder)) + 
-  geom_point()
+#pullup + pushup vs max grade
+ggplot(data = climbsP, na.rm = TRUE) + 
+  geom_smooth(aes(x = max_pullup, y = max_grade_boulder)) +
+  geom_smooth(aes(x = max_pushup, y = max_grade_boulder))
+                
+
+  ggplot(data = climbsP, na.rm = TRUE) + 
+  geom_smooth(aes(x = max_pullup, y = max_grade_boulder)) +
+  geom_smooth(aes(x = max_pushup, y = max_grade_boulder)) +
+  xlim(0, 35)
+
+
 ```
 
 # Summary
