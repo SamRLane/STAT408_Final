@@ -12,6 +12,7 @@ embed-resources: true
 #| warning: false
 #| message: false
 library(tidyverse)
+library(fmsb)
 
 climbs = read_csv("Climbs.csv", col_select = c(1, 2, 3, 4, 5, 6, 8, 11, 14, 15, 
                                                16, 17, 26, 28, 32, 34), 
@@ -98,6 +99,54 @@ ggplot(data = climbsP, na.rm = TRUE) +
 
 
 ```
+
+```{r}
+
+# Compute correlations of training variables with max_grade_boulder
+training_vars <- c("frequency_climbing", "avg_hours_climbing_week", 
+                   "avg_hours_training_week", "frequency_hangboarding",
+                   "frequency_endurance", "frequency_strength",
+                   "max_pullup", "max_pushup")
+
+cors <- climbs |>
+  select(max_grade_boulder, all_of(training_vars)) |>
+  drop_na() |>
+  summarise(across(all_of(training_vars),
+                   ~cor(.x, max_grade_boulder, use = "complete.obs"))) |>
+  round(3)
+
+radar_data <- bind_rows(
+  setNames(rep(list(1),  length(training_vars)), training_vars),  # max
+  setNames(rep(list(0),  length(training_vars)), training_vars),  # min (was -1)
+  cors
+)
+
+colnames(radar_data) <- c(
+  "Sessions\n/week", "Hours\nclimbing", "Hours\ntraining",
+  "Hangboard\nfreq", "Endurance\nfreq", "Strength\nfreq",
+  "Max\npull-ups", "Max\npush-ups"
+)
+
+par(mar = c(1, 1, 2, 1), bg = "white")
+
+radarchart(
+  radar_data,
+  axistype   = 1,
+  pcol       = "#2171b5",
+  pfcol      = adjustcolor("#2171b5", alpha.f = 0.25),
+  plwd       = 2.5,
+  cglcol     = "grey75",
+  cglty      = 1,
+  cglwd      = 0.6,
+  axislabcol = "grey40",
+  vlcex      = 0.85,
+  calcex     = 0.7,
+  caxislabels = c("0", "0.25", "0.5", "0.75", "1"),  # updated
+  title      = "Correlation with max boulder grade"
+)
+```
+
+
 
 # Summary
 
