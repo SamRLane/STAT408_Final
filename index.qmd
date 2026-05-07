@@ -48,6 +48,15 @@ climbs = climbs |> mutate(
 )
 
 
+
+cols <- c("weight", "height", "arm_span", "frequency_climbing", "avg_hours_climbing_week", "avg_hours_training_week", "frequency_hangboarding", "frequency_endurance", "frequency_strength", "max_pullup", "max_pushup")
+
+climbs <- climbs |> filter(across(all_of(cols), ~
+  .x >= quantile(.x, 0.25, na.rm = TRUE) - 1.5 * IQR(.x, na.rm = TRUE) &
+  .x <= quantile(.x, 0.75, na.rm = TRUE) + 1.5 * IQR(.x, na.rm = TRUE)
+))
+
+
 training_vars <- c("frequency_climbing", "avg_hours_climbing_week", 
                    "avg_hours_training_week", "frequency_hangboarding",
                    "frequency_endurance", "frequency_strength",
@@ -90,48 +99,29 @@ We ended up mainly talk about Max V Grade instead of sport grade because there w
 
 ```{r}
 #| warning: false
-#Had to look up code for IQR to remove outliers
-climbsAH = climbs |> filter(
-  arm_span >= quantile(arm_span, 0.25, na.rm = TRUE) - 1.5 * IQR(arm_span, na.rm = TRUE), 
-  arm_span <= quantile(arm_span, 0.75, na.rm = TRUE) + 1.5 * IQR(arm_span, na.rm = TRUE),
-  height >= quantile(height, 0.25, na.rm = TRUE) - 1.5 * IQR(height, na.rm = TRUE), 
-  height <= quantile(height, 0.75, na.rm = TRUE) + 1.5 * IQR(height, na.rm = TRUE)
-)
-#arm span vs max grade bouldering
-ggplot(data = climbsAH, aes(x = arm_span, y = max_grade_boulder), na.rm = TRUE) + 
-  geom_smooth()
+
 #ape index vs max grade bouldering
-ggplot(data = climbsAH, aes(x = arm_span - height, y = max_grade_boulder)) + 
+ggplot(data = climbs, aes(x = arm_span - height, y = max_grade_boulder)) + 
   geom_smooth()
 ```
 
-
+```{r}
+#| warning: FALSE
+climbsB = climbs |> filter(
+  !is.na(weight), !is.na(height), !is.na(max_grade_boulder),
+)
+climbsB |>
+  mutate(bmi = weight / (height / 100)^2) |>
+  ggplot(aes(x = factor(max_grade_boulder), y = bmi)) +
+  geom_violin(fill = "steelblue", alpha = 0.4) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5) +
+  labs(x = "Max Boulder Grade (V scale)", y = "BMI")
+```
 
 # Results 2
 
-```{r}
-#| warning: false
-
-climbsP = climbs |> filter(
-  max_pullup >= quantile(max_pullup, 0.25, na.rm = TRUE) - 1.5 * IQR(max_pullup, na.rm = TRUE), 
-  max_pullup <= quantile(max_pullup, 0.75, na.rm = TRUE) + 1.5 * IQR(max_pullup, na.rm = TRUE),
-  max_pushup >= quantile(max_pushup, 0.25, na.rm = TRUE) - 1.5 * IQR(max_pushup, na.rm = TRUE), 
-  max_pushup <= quantile(max_pushup, 0.75, na.rm = TRUE) + 1.5 * IQR(max_pushup, na.rm = TRUE)
-)
-
-#pullup + pushup vs max grade
-ggplot(data = climbsP, na.rm = TRUE) + 
-  geom_smooth(aes(x = max_pullup, y = max_grade_boulder)) +
-  geom_smooth(aes(x = max_pushup, y = max_grade_boulder))
-                
-
-  ggplot(data = climbsP, na.rm = TRUE) + 
-  geom_smooth(aes(x = max_pullup, y = max_grade_boulder)) +
-  geom_smooth(aes(x = max_pushup, y = max_grade_boulder)) +
-  xlim(0, 35)
 
 
-```
 
 ```{r}
 
@@ -195,6 +185,9 @@ pretty_names <- c(
   "Hangboard freq", "Endurance freq", "Strength freq",
   "Max pull-ups", "Max push-ups"
 )
+
+
+
 ```
 
 ```{r}
@@ -240,22 +233,7 @@ output$trainingPlot <- renderPlot({
 
 
 
-```{r}
-#| warning: FALSE
-climbsB = climbs |> filter(
-  !is.na(weight), !is.na(height), !is.na(max_grade_boulder),
-  weight >= quantile(weight, 0.25) - 1.5 * IQR(weight), 
-  weight <= quantile(weight, 0.75) + 1.5 * IQR(weight),
-  height >= quantile(height, 0.25) - 1.5 * IQR(height), 
-  height <= quantile(height, 0.75) + 1.5 * IQR(height)
-)
-climbsB |>
-  mutate(bmi = weight / (height / 100)^2) |>
-  ggplot(aes(x = factor(max_grade_boulder), y = bmi)) +
-  geom_violin(fill = "steelblue", alpha = 0.4) +
-  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5) +
-  labs(x = "Max Boulder Grade (V scale)", y = "BMI")
-```
+
 
 
 # Summary
