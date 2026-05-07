@@ -59,15 +59,35 @@ pretty_names <- c(
   "Max pull-ups", "Max push-ups")
 ```
 
+```{css}
+.cell.bslib-grid-item.html-fill-item {
+  height: 0 !important;
+  min-height: 0 !important;
+  flex: 0 0 0 !important;
+  overflow: hidden !important;
+}
+
+.card-body p{
+  font-size: 20px;
+}
+```
+
 # Introduction
-To see our dashboard which is how it is meant to be viewed go to this link 
 
-https://samrlane.github.io/STAT408_Final
-
-A link to our Github repository
-
-https://github.com/SamRLane/STAT408_Final
-
+::: {.card}
+<p>
+  We chose the Climbs.csv dataset we found online as we are both avid climbers. We had to clean the data very intensively as not many people answered the questions in the same formatting. This included removing almost half of the columns that were so bad they could not be saved. What we ended up with was very useful and exciting data. 
+  
+  Now with clean data we wanted to explore many things such as:
+    <ul>
+      <li>Ape index vs Max V Grade</li>
+      <li>Correlation of training on Max V Grade</li>
+      <li>BMI within V grades</li>
+    </ul>
+  
+  We ended up mainly talk about Max V Grade instead of sport grade because there were way more boulderers who took the survey.
+</p>
+:::
 # Results 1
 
 ```{r}
