@@ -1,5 +1,5 @@
 ---
-title: "Final"
+title: "Rock Climbing V Grades Study"
 author: "Samuel Lane & Nolan Scott"
 format: 
   dashboard: 
