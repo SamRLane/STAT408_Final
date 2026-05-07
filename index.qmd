@@ -1,5 +1,5 @@
 ---
-title: "Rock Climbing V Grade Study"
+title: "Final"
 author: "Samuel Lane & Nolan Scott"
 format: 
   dashboard: 
@@ -84,7 +84,10 @@ pretty_names <- c(
 # Introduction
 
 ::: {.card}
-We chose the Climbs.csv dataset we found online as we are both avid climbers. We had to clean the data very intensively as not many people answered the questions in the same formatting. This included removing almost half of the columns that were not useful. What we ended up with very interesting data to plot. 
+
+What are the greatest contributing factors to someones maximum climbing ability?
+
+We chose the Climbs.csv dataset we found online as we are both avid climbers. We had to clean the data very intensively as not many people answered the questions in the same formatting. This included removing almost half of the columns that were so bad they could not be saved. What we ended up with was very useful and exciting data. 
 
 <strong>Now with clean data we wanted to explore many things such as:</strong>
 <ul>
@@ -98,9 +101,9 @@ We ended up mainly talk about Max V Grade instead of sport grade because there w
 <strong>New skills learned:</strong>
 <ul>
   <li>We learned how to get bullet points in the dashboard</li>
-  <li>Violin plot to show density of answers</li>
+  <li>Found Violin plot for a cool way to show data</li>
   <li>Spider plot because it condensed our findings</li>
-  <li>css to fix formatting in the dashboard</li>
+  <li>css to fix weird formatting in the dashboard</li>
   <li>Not new but we used all the skills learned in class</li>
 </ul>
 :::
@@ -247,5 +250,23 @@ output$trainingPlot <- renderPlot({
 
 # Summary
 
-Stuff goes here
+::: {.card}
+Surprisingly there seemed to be no correlation between max boulder grade and a persons ape index, dispite many existing myths in the climbing community. So we turned to other predictors, BMI seemed promising as our violin graphs did show a tapering to a specific BMI of around 22-23 however we knew a better predictor existed. 
+
+Looking at the training data, the best predictor is the max number of pull ups a person can do, followed by times climbing per week (associated with total hours climbing per week) and hang board frequency. Most surprisingly was the lack of positive correlation with endurancy and strength training.
+
+
+This is a link to the dataset we used
+https://docs.google.com/spreadsheets/d/1J6d45EqIlIsIqNdi2X-Zl-EGFxf9d9T3R_W55xrpEAs/edit?gid=1650492946#gid=1650492946
+
+If you would like to learn more, here are some additional resources that will be helpful
+
+ - [Sport Climbing Predictors]
+  - [Additional Pullup Data]
+ - [Climber Data]
+
+[Sport Climbing Predictors]: https://latticetraining.com/blog/what-is-the-number-1-measure-of-performance-for-sport-climbers
+[Additional Pullup Data]: https://www.powercompanyclimbing.com/blog/heatmaps
+[Climber Data]: https://www.kaggle.com/datasets/jordizar/climb-dataset
+:::
 
