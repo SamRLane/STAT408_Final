@@ -1,5 +1,5 @@
 ---
-title: "Final"
+title: "Rock Climbing V Grade Study"
 author: "Samuel Lane & Nolan Scott"
 format: 
   dashboard: 
@@ -84,7 +84,7 @@ pretty_names <- c(
 # Introduction
 
 ::: {.card}
-We chose the Climbs.csv dataset we found online as we are both avid climbers. We had to clean the data very intensively as not many people answered the questions in the same formatting. This included removing almost half of the columns that were so bad they could not be saved. What we ended up with was very useful and exciting data. 
+We chose the Climbs.csv dataset we found online as we are both avid climbers. We had to clean the data very intensively as not many people answered the questions in the same formatting. This included removing almost half of the columns that were not useful. What we ended up with very interesting data to plot. 
 
 <strong>Now with clean data we wanted to explore many things such as:</strong>
 <ul>
@@ -98,9 +98,9 @@ We ended up mainly talk about Max V Grade instead of sport grade because there w
 <strong>New skills learned:</strong>
 <ul>
   <li>We learned how to get bullet points in the dashboard</li>
-  <li>Found Violin plot for a cool way to show data</li>
+  <li>Violin plot to show density of answers</li>
   <li>Spider plot because it condensed our findings</li>
-  <li>css to fix weird formatting in the dashboard</li>
+  <li>css to fix formatting in the dashboard</li>
   <li>Not new but we used all the skills learned in class</li>
 </ul>
 :::
