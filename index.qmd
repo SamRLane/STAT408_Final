@@ -256,8 +256,9 @@ Surprisingly there seemed to be no correlation between max boulder grade and a p
 Looking at the training data, the best predictor is the max number of pull ups a person can do, followed by times climbing per week (associated with total hours climbing per week) and hang board frequency. Most surprisingly was the lack of positive correlation with endurancy and strength training.
 
 
-This is a link to the dataset we used
-https://docs.google.com/spreadsheets/d/1J6d45EqIlIsIqNdi2X-Zl-EGFxf9d9T3R_W55xrpEAs/edit?gid=1650492946#gid=1650492946
+This is a link to the dataset we used [Our Data :)]
+
+[Our Data :)]: https://docs.google.com/spreadsheets/d/1J6d45EqIlIsIqNdi2X-Zl-EGFxf9d9T3R_W55xrpEAs/edit?gid=1650492946#gid=1650492946
 
 If you would like to learn more, here are some additional resources that will be helpful
 
