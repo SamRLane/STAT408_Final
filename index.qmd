@@ -5,14 +5,16 @@ format:
   dashboard: 
     theme: sandstone
 embed-resources: true
-
+server: shiny
 ---
 
 ```{r}
 #| warning: false
 #| message: false
+#| context: setup
 library(tidyverse)
 library(fmsb)
+library(shiny)
 
 climbs = read_csv("Climbs.csv", col_select = c(1, 2, 3, 4, 5, 6, 8, 11, 14, 15, 
                                                16, 17, 26, 28, 32, 34), 
@@ -44,6 +46,17 @@ climbs = climbs |> mutate(
   max_pullup  = as.integer(parse_number(max_pullup)),
   max_pushup  = as.integer(parse_number(max_pushup))
 )
+
+
+training_vars <- c("frequency_climbing", "avg_hours_climbing_week", 
+                   "avg_hours_training_week", "frequency_hangboarding",
+                   "frequency_endurance", "frequency_strength",
+                   "max_pullup", "max_pushup")
+
+pretty_names <- c(
+  "Sessions/week", "Hours climbing", "Hours training",
+  "Hangboard freq", "Endurance freq", "Strength freq",
+  "Max pull-ups", "Max push-ups")
 ```
 
 # Introduction
@@ -64,7 +77,7 @@ climbsAH = climbs |> filter(
   arm_span >= quantile(arm_span, 0.25, na.rm = TRUE) - 1.5 * IQR(arm_span, na.rm = TRUE), 
   arm_span <= quantile(arm_span, 0.75, na.rm = TRUE) + 1.5 * IQR(arm_span, na.rm = TRUE),
   height >= quantile(height, 0.25, na.rm = TRUE) - 1.5 * IQR(height, na.rm = TRUE), 
-  height >= quantile(height, 0.75, na.rm = TRUE) - 1.5 * IQR(height, na.rm = TRUE)
+  height <= quantile(height, 0.75, na.rm = TRUE) + 1.5 * IQR(height, na.rm = TRUE)
 )
 #arm span vs max grade bouldering
 ggplot(data = climbsAH, aes(x = arm_span, y = max_grade_boulder), na.rm = TRUE) + 
@@ -73,6 +86,8 @@ ggplot(data = climbsAH, aes(x = arm_span, y = max_grade_boulder), na.rm = TRUE) 
 ggplot(data = climbsAH, aes(x = arm_span - height, y = max_grade_boulder)) + 
   geom_smooth()
 ```
+
+
 
 # Results 2
 
@@ -145,6 +160,67 @@ radarchart(
   title      = "Correlation with max boulder grade"
 )
 ```
+
+```{r}
+#| context: setup
+library(shiny)
+library(fmsb)
+library(tidyverse)
+
+training_vars <- c("frequency_climbing", "avg_hours_climbing_week", 
+                   "avg_hours_training_week", "frequency_hangboarding",
+                   "frequency_endurance", "frequency_strength",
+                   "max_pullup", "max_pushup")
+
+pretty_names <- c(
+  "Sessions/week", "Hours climbing", "Hours training",
+  "Hangboard freq", "Endurance freq", "Strength freq",
+  "Max pull-ups", "Max push-ups"
+)
+```
+
+```{r}
+#| content: card-sidebar
+
+checkboxGroupInput(
+  inputId = "training_vars",
+  label = "Select variables:",
+  choices = pretty_names,
+  selected = pretty_names
+)
+```
+
+```{r}
+#| title: Training Variables vs Max Boulder Grade
+
+plotOutput("trainingPlot")
+```
+
+```{r}
+#| context: server
+
+output$trainingPlot <- renderPlot({
+  selected <- input$training_vars
+  req(length(selected) >= 1)
+  
+  climbs |>
+    select(max_grade_boulder, all_of(training_vars)) |>
+    drop_na() |>
+    setNames(c("max_grade_boulder", pretty_names)) |>
+    pivot_longer(-max_grade_boulder, names_to = "Parameter", values_to = "Value") |>
+    filter(Parameter %in% selected) |>
+    ggplot(aes(x = Value, y = max_grade_boulder, color = Parameter)) +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~Parameter, scales = "free_x") +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    labs(y = "Max Boulder Grade", x = "")
+})
+```
+
+
+
+
 
 ```{r}
 #| warning: FALSE
