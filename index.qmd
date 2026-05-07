@@ -67,7 +67,7 @@ pretty_names <- c(
   overflow: hidden !important;
 }
 
-.card-body p{
+.card-body{
   font-size: 20px;
 }
 ```
@@ -75,18 +75,16 @@ pretty_names <- c(
 # Introduction
 
 ::: {.card}
-<p>
-  We chose the Climbs.csv dataset we found online as we are both avid climbers. We had to clean the data very intensively as not many people answered the questions in the same formatting. This included removing almost half of the columns that were so bad they could not be saved. What we ended up with was very useful and exciting data. 
-  
-  Now with clean data we wanted to explore many things such as:
-    <ul>
-      <li>Ape index vs Max V Grade</li>
-      <li>Correlation of training on Max V Grade</li>
-      <li>BMI within V grades</li>
-    </ul>
-  
-  We ended up mainly talk about Max V Grade instead of sport grade because there were way more boulderers who took the survey.
-</p>
+We chose the Climbs.csv dataset we found online as we are both avid climbers. We had to clean the data very intensively as not many people answered the questions in the same formatting. This included removing almost half of the columns that were so bad they could not be saved. What we ended up with was very useful and exciting data. 
+
+Now with clean data we wanted to explore many things such as:
+<ul>
+  <li>Ape index vs Max V Grade</li>
+  <li>Correlation of training on Max V Grade</li>
+  <li>BMI within V grades</li>
+</ul>
+
+We ended up mainly talk about Max V Grade instead of sport grade because there were way more boulderers who took the survey.
 :::
 # Results 1
 
