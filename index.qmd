@@ -86,7 +86,7 @@ pretty_names <- c(
 ::: {.card}
 We chose the Climbs.csv dataset we found online as we are both avid climbers. We had to clean the data very intensively as not many people answered the questions in the same formatting. This included removing almost half of the columns that were so bad they could not be saved. What we ended up with was very useful and exciting data. 
 
-Now with clean data we wanted to explore many things such as:
+<strong>Now with clean data we wanted to explore many things such as:</strong>
 <ul>
   <li>Ape index vs Max V Grade</li>
   <li>Correlation of training on Max V Grade</li>
@@ -94,6 +94,15 @@ Now with clean data we wanted to explore many things such as:
 </ul>
 
 We ended up mainly talk about Max V Grade instead of sport grade because there were way more boulderers who took the survey.
+
+<strong>New skills learned:</strong>
+<ul>
+  <li>We learned how to get bullet points in the dashboard</li>
+  <li>Found Violin plot for a cool way to show data</li>
+  <li>Spider plot because it condensed our findings</li>
+  <li>css to fix weird formatting in the dashboard</li>
+  <li>Not new but we used all the skills learned in class</li>
+</ul>
 :::
 # Results 1
 
